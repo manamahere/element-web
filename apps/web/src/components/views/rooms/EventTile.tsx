@@ -1094,7 +1094,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         } else if (
             (this.props.continuation && this.context.timelineRenderingType !== TimelineRenderingType.File) ||
             eventType === EventType.CallInvite ||
-            ElementCallEventType.matches(eventType)
+            ElementCallEventType.matches(eventType) ||
+            eventType === EventType.RTCNotification
         ) {
             // no avatar or sender profile for continuation messages and call tiles
             avatarSize = null;
