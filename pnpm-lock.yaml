@@ -167,7 +167,7 @@ importers:
         version: 16.3.0
       lodash:
         specifier: ^4.17.21
-        version: 4.17.21
+        version: 4.18.1
       mermaid:
         specifier: ^11.13.0
         version: 11.13.0
@@ -462,7 +462,7 @@ importers:
         version: 1.0.3
       matrix-js-sdk:
         specifier: github:matrix-org/matrix-js-sdk#develop
-        version: https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/eeafd7fcaaa0066040cea35bc15420ca90aa1b58
+        version: https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/d02205652f23d3ea1a9433938a5e1eb5b6d74f5d
       matrix-widget-api:
         specifier: ^1.17.0
         version: 1.17.0
@@ -9551,11 +9551,11 @@ packages:
   lodash.uniq@4.5.0:
     resolution: {integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==}
 
-  lodash@4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-
   lodash@4.17.23:
     resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
+
+  lodash@4.18.1:
+    resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
 
   log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
@@ -9666,8 +9666,8 @@ packages:
   matrix-events-sdk@0.0.1:
     resolution: {integrity: sha512-1QEOsXO+bhyCroIe2/A5OwaxHvBm7EsSQ46DEDn8RBIfQwN5HWBpFvyWWR4QY0KHPPnnJdI99wgRiAl7Ad5qaA==}
 
-  matrix-js-sdk@https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/eeafd7fcaaa0066040cea35bc15420ca90aa1b58:
-    resolution: {tarball: https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/eeafd7fcaaa0066040cea35bc15420ca90aa1b58}
+  matrix-js-sdk@https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/d02205652f23d3ea1a9433938a5e1eb5b6d74f5d:
+    resolution: {tarball: https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/d02205652f23d3ea1a9433938a5e1eb5b6d74f5d}
     version: 41.2.0
     engines: {node: '>=22.0.0'}
 
@@ -15437,7 +15437,7 @@ snapshots:
     dependencies:
       debug: 4.4.3
       fs-extra: 9.1.0
-      lodash: 4.17.21
+      lodash: 4.18.1
       tmp-promise: 3.0.3
     transitivePeerDependencies:
       - supports-color
@@ -15544,7 +15544,7 @@ snapshots:
       '@rushstack/terminal': 0.21.0(@types/node@18.19.130)
       '@rushstack/ts-command-line': 5.1.7(@types/node@18.19.130)
       diff: 8.0.3
-      lodash: 4.17.21
+      lodash: 4.17.23
       minimatch: 10.2.5
       resolve: 1.22.11
       semver: 7.5.4
@@ -18879,7 +18879,7 @@ snapshots:
       graceful-fs: 4.2.11
       is-stream: 2.0.1
       lazystream: 1.0.1
-      lodash: 4.17.21
+      lodash: 4.18.1
       normalize-path: 3.0.0
       readable-stream: 4.7.0
 
@@ -19267,7 +19267,7 @@ snapshots:
       '@types/seedrandom': 3.0.8
       base64-arraybuffer: 1.0.2
       is-buffer: 2.0.5
-      lodash: 4.17.21
+      lodash: 4.18.1
       long: 5.3.2
       reflect-metadata: 0.1.14
       seedrandom: 3.0.5
@@ -20642,7 +20642,7 @@ snapshots:
       '@electron/asar': 3.4.1
       debug: 4.4.3
       fs-extra: 7.0.1
-      lodash: 4.17.21
+      lodash: 4.18.1
       temp: 0.9.4
     optionalDependencies:
       '@electron/windows-sign': 1.2.2
@@ -21899,7 +21899,7 @@ snapshots:
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
-      lodash: 4.17.21
+      lodash: 4.18.1
       pretty-error: 4.0.0
       tapable: 2.3.0
     optionalDependencies:
@@ -23019,9 +23019,9 @@ snapshots:
 
   lodash.uniq@4.5.0: {}
 
-  lodash@4.17.21: {}
-
   lodash@4.17.23: {}
+
+  lodash@4.18.1: {}
 
   log-symbols@4.1.0:
     dependencies:
@@ -23180,7 +23180,7 @@ snapshots:
 
   matrix-events-sdk@0.0.1: {}
 
-  matrix-js-sdk@https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/eeafd7fcaaa0066040cea35bc15420ca90aa1b58:
+  matrix-js-sdk@https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/d02205652f23d3ea1a9433938a5e1eb5b6d74f5d:
     dependencies:
       '@babel/runtime': 7.29.2
       '@matrix-org/matrix-sdk-crypto-wasm': 18.0.0
@@ -23201,7 +23201,7 @@ snapshots:
     dependencies:
       '@babel/parser': 7.29.2
       '@babel/traverse': 7.29.0
-      lodash: 4.17.21
+      lodash: 4.18.1
       minimist: 1.2.8
       walk: 2.3.15
     transitivePeerDependencies:
@@ -23465,7 +23465,7 @@ snapshots:
     dependencies:
       doctrine: 3.0.0
       file: 0.2.2
-      lodash: 4.17.21
+      lodash: 4.18.1
       markdown-it: 14.1.1
       mkdirp: 0.5.6
       requirejs: 2.3.8
@@ -24690,7 +24690,7 @@ snapshots:
 
   pretty-error@4.0.0:
     dependencies:
-      lodash: 4.17.21
+      lodash: 4.18.1
       renderkid: 3.0.0
 
   pretty-format@27.5.1:
@@ -25141,7 +25141,7 @@ snapshots:
       css-select: 4.3.0
       dom-converter: 0.2.0
       htmlparser2: 6.1.0
-      lodash: 4.17.21
+      lodash: 4.18.1
       strip-ansi: 6.0.1
 
   require-directory@2.1.1: {}
@@ -26942,7 +26942,7 @@ snapshots:
     dependencies:
       axios: 1.13.5
       joi: 18.0.2
-      lodash: 4.17.23
+      lodash: 4.18.1
       minimist: 1.2.8
       rxjs: 7.8.2
     transitivePeerDependencies:
