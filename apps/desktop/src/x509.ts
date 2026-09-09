@@ -384,6 +384,9 @@ async function ipcListHardwareKeys(): Promise<X509Result<HardwareKey[]>> {
 async function ipcGetKeyState(serialNumber: string): Promise<X509Result<HardwareKeyState>> {
     const session = await getSession(serialNumber);
     if (!session.ok) {
+        if (session.error.code === "MODULE_NOT_LOADED") {
+            return session;
+        }
         // TODO: Should we present keys we did have but now don't to the user?
         return ok("absent");
     }
