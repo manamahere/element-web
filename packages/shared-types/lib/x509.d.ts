@@ -16,13 +16,7 @@ Please see LICENSE files in the repository root for full details.
  * listHardwareKeys()  ->  getKeyState(serial)  ->  logIntoKey(serial, pin)  ->  signData(serial, data)
  * ```
  */
-export type X509IpcCommand =
-    | "getUserCertificate"
-    | "getCaCertificates"
-    | "listHardwareKeys"
-    | "getKeyState"
-    | "logIntoKey"
-    | "signData";
+export type X509IpcCommand = "getUserCertificate" | "listHardwareKeys" | "getKeyState" | "logIntoKey" | "signData";
 
 /**
  * Convenient result type for IPC communication.
@@ -107,15 +101,7 @@ export type HardwareKeyState = "absent" | "noSigningKey" | "open" | "authenticat
 export interface UserCertificate {
     certificate: CertificateInfo;
     /**
-     * PEM-encoded certificate chain.
+     * PEM-encoded certificate chain: the leaf followed by its intermediates, without the root.
      */
     chain: string;
-    /**
-     * PEM-encoded CA certificates from the same directory, used to verify X.509 signatures on *other*
-     * users' identities.
-     *
-     * Unlike {@link chain} this includes the root, because these are trust anchors rather than a chain to
-     * present. Empty when the directory holds no CA certificates.
-     */
-    caCertsPem: string;
 }
