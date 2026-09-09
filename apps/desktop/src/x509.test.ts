@@ -110,14 +110,6 @@ async function writeCerts(...pems: string[]): Promise<void> {
 }
 
 /**
- * Assert a concatenated PEM bundle holds exactly the given certificates, regardless of order.
- */
-function expectBundle(bundle: string, ...pems: string[]): void {
-    const found = bundle.match(/-----BEGIN CERTIFICATE-----[\s\S]*?-----END CERTIFICATE-----\n?/g) ?? [];
-    expect(found.sort()).toEqual(pems.sort());
-}
-
-/**
  * Convert an an array into an array-like object that also offers graphene's `items()` accessor.
  */
 function collection<T>(items: T[]) {
@@ -267,34 +259,6 @@ describe("decodeTriesRemaining", () => {
     });
 });
 
-describe("getCaCertificates", () => {
-    it("returns every CA and never the leaf", async () => {
-        await writeCerts(rootPem, intermediatePem, leafPem);
-
-        const result = await x509.getCaCertificates();
-        assert(result.ok);
-        expectBundle(result.data, intermediatePem, rootPem);
-    });
-
-    it("returns nothing when no certificate directory is configured", async () => {
-        mockX509Config(PKCS11_LIBRARY);
-
-        await expect(x509.getCaCertificates()).resolves.toEqual({
-            ok: true,
-            data: "",
-        });
-    });
-
-    it("returns nothing when the certificate directory cannot be read", async () => {
-        mockX509Config({ ...PKCS11_LIBRARY, certs_path: path.join(dir, "missing") });
-
-        await expect(x509.getCaCertificates()).resolves.toEqual({
-            ok: true,
-            data: "",
-        });
-    });
-});
-
 describe("getUserCertificate", () => {
     it("returns the single non-CA certificate and its chain", async () => {
         await writeCerts(rootPem, intermediatePem, leafPem);
@@ -306,8 +270,6 @@ describe("getUserCertificate", () => {
         expect(result.data.certificate.validTo).toBeInstanceOf(Date);
         // Leaf then intermediate - the self-signed root is excluded.
         expect(result.data.chain).toBe(leafPem + intermediatePem);
-        // The trust anchors are every CA including the root, but not the leaf.
-        expectBundle(result.data.caCertsPem, intermediatePem, rootPem);
     });
 
     it("stops the chain at the first missing issuer", async () => {
@@ -315,16 +277,7 @@ describe("getUserCertificate", () => {
 
         await expect(x509.getUserCertificate()).resolves.toMatchObject({
             ok: true,
-            data: { chain: leafPem, caCertsPem: rootPem },
-        });
-    });
-
-    it("reports no trust anchors when the directory holds only a leaf", async () => {
-        await writeCerts(leafPem);
-
-        await expect(x509.getUserCertificate()).resolves.toMatchObject({
-            ok: true,
-            data: { chain: leafPem, caCertsPem: "" },
+            data: { chain: leafPem },
         });
     });
 
@@ -339,7 +292,25 @@ describe("getUserCertificate", () => {
 
         await expect(x509.getUserCertificate()).resolves.toMatchObject({
             ok: true,
-            data: { chain: leafPem, caCertsPem: "" },
+            data: { chain: leafPem },
+        });
+    });
+
+    it("fails when no certificate directory is configured", async () => {
+        mockX509Config(PKCS11_LIBRARY);
+
+        await expect(x509.getUserCertificate()).resolves.toMatchObject({
+            ok: false,
+            error: { code: "CERTIFICATE_NOT_FOUND" },
+        });
+    });
+
+    it("fails when the certificate directory cannot be read", async () => {
+        mockX509Config({ ...PKCS11_LIBRARY, certs_path: path.join(dir, "missing") });
+
+        await expect(x509.getUserCertificate()).resolves.toMatchObject({
+            ok: false,
+            error: { code: "CERTIFICATE_NOT_FOUND" },
         });
     });
 
@@ -365,10 +336,9 @@ describe("getUserCertificate", () => {
 describe("IPC", () => {
     beforeEach(() => writeCerts(leafPem));
 
-    it("routes the on-disk certificate commands", async () => {
+    it("routes the on-disk certificate command", async () => {
         const { certificate } = await callIpcAndUnwrap<UserCertificate>("getUserCertificate");
         expect(certificate.subject).toContain("CN=alice");
-        await expect(callIpcAndUnwrap<string>("getCaCertificates")).resolves.toBe("");
     });
 
     describe("listHardwareKeys", () => {
