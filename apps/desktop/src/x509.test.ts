@@ -468,12 +468,14 @@ describe("IPC", () => {
                 await expect(keyState()).resolves.toBe("authenticated");
             });
 
-            // Pins the current behaviour: a misconfigured client cannot be told apart from an unplugged key.
-            it("reports a present token as absent when no certificate is configured on disk", async () => {
+            it("fails when no certificate is configured on disk", async () => {
                 token.insertKeyPair(leafPem);
                 mockX509Config(PKCS11_LIBRARY);
 
-                await expect(keyState()).resolves.toBe("absent");
+                await expect(callIpc("getKeyState", "SERIAL1")).resolves.toMatchObject({
+                    ok: false,
+                    error: { code: "CERTIFICATE_NOT_FOUND" },
+                });
             });
         });
 
