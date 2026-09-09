@@ -395,7 +395,14 @@ async function ipcGetKeyState(serialNumber: string): Promise<X509Result<Hardware
     }
     const keyId = await findSigningKeyId(serialNumber);
     if (!keyId.ok) {
-        return ok(keyId.error.code === "PRIVATE_KEY_NOT_FOUND" ? "noSigningKey" : "absent");
+        switch (keyId.error.code) {
+            case "CERTIFICATE_NOT_FOUND":
+                return keyId;
+            case "PRIVATE_KEY_NOT_FOUND":
+                return ok("noSigningKey");
+            default:
+                return ok("absent");
+        }
     }
     return ok("open");
 }
