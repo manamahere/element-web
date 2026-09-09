@@ -299,21 +299,6 @@ async function findUserLeaf(): Promise<X509Result<{ leaf: X509Certificate; chain
 }
 
 /**
- * The CA certificates in the configured directory, as trust anchors for other users' identities.
- *
- * Unlike {@link findUserLeaf}, this does not require the client to have the user's leaf certificate configured.
- */
-export async function getCaCertificates(): Promise<X509Result<string>> {
-    const certs = await readCertsDirectory();
-    return ok(
-        certs
-            .filter((cert) => cert.ca)
-            .map((cert) => cert.toString())
-            .join(""),
-    );
-}
-
-/**
  * Read user's own certificate and chain from disk.
  */
 export async function getUserCertificate(): Promise<X509Result<UserCertificate>> {
@@ -324,7 +309,6 @@ export async function getUserCertificate(): Promise<X509Result<UserCertificate>>
     return ok({
         certificate: toCertificateInfo(found.data.leaf),
         chain: buildChain(found.data.leaf, found.data.chain),
-        caCertsPem: found.data.chain.map((cert) => cert.toString()).join(""),
     });
 }
 
@@ -486,9 +470,6 @@ ipcMain.on("x509", async function (ev: IpcMainEvent, payload): Promise<void> {
     switch (payload.name as X509IpcCommand) {
         case "getUserCertificate":
             ret = await getUserCertificate();
-            break;
-        case "getCaCertificates":
-            ret = await getCaCertificates();
             break;
         case "listHardwareKeys":
             ret = await ipcListHardwareKeys();
